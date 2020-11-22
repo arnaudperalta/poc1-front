@@ -33,7 +33,7 @@ export default {
 			this.successCard = false;
 			this.failCard = false;
 			this.axios
-				.post("http://localhost:8081/api/register", {
+				.post(`${this.$api_address}/api/register`, {
 					email: this.email,
 					password: this.psw
 				})

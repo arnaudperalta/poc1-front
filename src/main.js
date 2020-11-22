@@ -13,6 +13,8 @@ Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
 Vue.use(VueCookies);
 
+Vue.prototype.$api_address = "http://172.27.111.185:8081";
+
 new Vue({
 	render: h => h(App),
 }).$mount('#app')

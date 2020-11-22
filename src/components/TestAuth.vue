@@ -29,7 +29,7 @@ export default {
 			var token = this.$cookies.get("AuthToken");
 			console.log(token);
 			this.axios
-				.post("http://localhost:8081/api/token_test", {}, {
+				.post(`${this.$api_address}/api/token_test`, {}, {
 					headers: {
 						"Authorization": `Bearer ${token}`
 					}
