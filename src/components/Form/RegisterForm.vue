@@ -1,20 +1,48 @@
 <template>
-	<form>
-		<div class="form-group col-4 offset-4">
-			<h2>Inscription</h2>
-			<label>Adresse email</label>
-			<input type="email" class="form-control" v-model="email">
-			<label>Mot de passe</label>
-			<input type="password" class="form-control" v-model="psw">
-			<button type="button" class="btn btn-primary mt-2" v-on:click="sendRegistration">S'inscrire</button>
-			<div v-if="successCard" class="alert alert-success mt-2">
-				Inscription réussie.
-			</div>
-			<div v-if="failCard" class="alert alert-danger mt-2">
-				Inscription échouée.
-			</div>
-		</div>
-	</form>
+	<v-form>
+		<h2>Inscription</h2>
+		<label>Adresse email</label>
+		<v-text-field
+			v-model="email"
+			type="email" />
+		<label>Mot de passe</label>
+		<v-text-field
+			v-model="psw"
+			type="password" />
+		<v-btn
+			color="primary"
+			@click="sendRegistration">
+			S'inscrire
+		</v-btn>
+		<v-snackbar
+			v-model="successSnack"
+			color="success">
+			Inscription réussie
+			<template v-slot:action="{ attrs }">
+				<v-btn
+					color="white"
+					text
+					v-bind="attrs"
+					@click="successSnack = false">
+					Fermer
+				</v-btn>
+			</template>
+		</v-snackbar>
+		<v-snackbar
+			v-model="failSnack"
+			color="error">
+			Inscription échouée
+			<template v-slot:action="{ attrs }">
+				<v-btn
+					color="white"
+					text
+					v-bind="attrs"
+					@click="failSnack = false">
+					Fermer
+				</v-btn>
+			</template>
+		</v-snackbar>
+	</v-form>
 </template>
 
 <script>
@@ -24,8 +52,8 @@ export default {
 		return {
 			email: "",
 			psw: "",
-			successCard: false,
-			failCard: false
+			successSnack: false,
+			failSnack: false
 		}
 	},
 	methods: {
@@ -34,17 +62,20 @@ export default {
 			this.failCard = false;
 			this.axios
 				.post(`${this.$api_address}/api/register`, {
-					email: this.email,
-					password: this.psw
-				})
+						email: this.email,
+						password: this.psw
+					},
+					{ timeout: 1000 }
+				)
 				.then(() => this.registerSuccess())
-				.catch(() => this.registerFailed());
+				.catch((err) => this.registerFailed(err));
 		},
 		registerSuccess() {
-			this.successCard = true;
+			this.successSnack = true;
 		},
-		registerFailed() {
-			this.failCard = true;
+		registerFailed(err) {
+			console.error(err);
+			this.failSnack = true;
 		}
 	}
 }

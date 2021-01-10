@@ -1,20 +1,48 @@
 <template>
-	<form>
-		<div class="form-group col-4 offset-4">
-			<h2>Authentification</h2>
-			<label>Adresse email</label>
-			<input type="email" class="form-control" v-model="email">
-			<label>Mot de passe</label>
-			<input type="password" class="form-control" v-model="psw">
-			<button type="button" class="btn btn-primary mt-2" v-on:click="sendAuthentification">S'authentifier</button>
-			<div v-if="successCard" class="alert alert-success mt-2">
-				Authentification réussie.
-			</div>
-			<div v-if="failCard" class="alert alert-danger mt-2">
-				Authentification échouée.
-			</div>
-		</div>
-	</form>
+	<v-form>
+		<h2>Authentification</h2>
+		<label>Adresse email</label>
+		<v-text-field 
+			v-model="email" 
+			type="email" />
+		<label>Mot de passe</label>
+		<v-text-field
+			v-model="psw"
+			type="password" />
+		<v-btn
+			color="primary"
+			@click="sendAuthentification">
+			S'authentifier
+		</v-btn>
+		<v-snackbar
+			v-model="successSnack"
+			color="success">
+			Authentification réussie
+			<template v-slot:action="{ attrs }">
+				<v-btn
+					color="white"
+					text
+					v-bind="attrs"
+					@click="successSnack = false">
+					Fermer
+				</v-btn>
+			</template> 
+		</v-snackbar>
+		<v-snackbar
+			v-model="failSnack"
+			color="error">
+			Authentification échouée
+			<template v-slot:action="{ attrs }">
+				<v-btn
+					color="white"
+					text
+					v-bind="attrs"
+					@click="failSnack = false">
+					Fermer
+				</v-btn>
+			</template>
+		</v-snackbar>
+	</v-form>
 </template>
 
 <script>
@@ -24,28 +52,31 @@ export default {
 		return {
 			email: "",
 			psw: "",
-			successCard: false,
-			failCard: false
+			successSnack: false,
+			failSnack: false
 		}
 	},
 	methods: {
 		sendAuthentification() {
-			this.successCard = false;
-			this.failCard = false;
+			this.successSnack = false;
+			this.failSnack = false;
 			this.axios
 				.post(`${this.$api_address}/api/authenticate`, {
-					email: this.email,
-					password: this.psw
-				})
+						email: this.email,
+						password: this.psw
+					},
+					{ timeout: 1000 }
+				)
 				.then((res) => this.authSuccess(res))
 				.catch(() => this.authFailed());
 		},
 		authSuccess(res) {
 			this.$cookies.set("AuthToken", res.data.token, "1h");
-			this.successCard = true;
+			this.successSnack = true;
 		},
 		authFailed() {
-			this.failCard = true;
+			this.$cookies.remove("AuthToken");
+			this.failSnack = true;
 		}
 	}
 }

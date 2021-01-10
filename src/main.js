@@ -1,20 +1,22 @@
-import Vue from 'vue';
-import App from './App.vue';
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-import VueCookies from 'vue-cookies';
-import { BootstrapVue } from 'bootstrap-vue';
-
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vue from "vue";
+import App from "./App.vue";
+import axios from "axios";
+import VueAxios from "vue-axios";
+import VueCookies from "vue-cookies";
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
 Vue.use(VueCookies);
 
-Vue.prototype.$api_address = "http://172.27.111.185:8081";
+Vue.prototype.$api_address = "http://localhost:8080";
 
 new Vue({
-	render: h => h(App),
-}).$mount('#app')
+    vuetify,
+    render: h => h(App)
+}).$mount("#app");
+
+// Detecte l'utilisation de service workers utiles pour une PWA.
+if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("/sw.js");
+}
