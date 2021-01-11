@@ -9,7 +9,7 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueCookies);
 
-Vue.prototype.$api_address = "http://89.80.243.178:8080";
+Vue.prototype.$api_address = "https://api.arnaudperalta.fr";
 
 new Vue({
     vuetify,
