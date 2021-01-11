@@ -3,10 +3,13 @@
 		<v-container fluid>
 			<h1>PoC Open Street Arts</h1>
 			<v-row>
-				<v-col md="10">
+				<v-col
+					md="10"
+					cols="12">
 					<Map />
 				</v-col>
-				<v-col md="2">
+				<v-col
+					md="2">
 					<RegisterForm />
 					<br>
 					<AuthForm />

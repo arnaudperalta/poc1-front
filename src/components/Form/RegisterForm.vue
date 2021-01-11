@@ -54,7 +54,7 @@ export default {
 			psw: "",
 			successSnack: false,
 			failSnack: false
-		}
+		};
 	},
 	methods: {
 		sendRegistration() {
@@ -78,5 +78,6 @@ export default {
 			this.failSnack = true;
 		}
 	}
-}
+};
 </script>
+ 

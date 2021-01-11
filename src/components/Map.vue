@@ -13,7 +13,7 @@ import { LMap } from "vue2-leaflet";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-	iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+	iconRetinaUrl: require("@/assets/room.svg"),
 	iconUrl: require("@/assets/room.svg"),
 	shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 	iconSize: [64, 64],
@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 #mapContainer {
-	width: 80vw;
+	width: 100%;
 	height: 90vh;
 }
 </style>

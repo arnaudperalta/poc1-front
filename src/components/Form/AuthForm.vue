@@ -54,7 +54,7 @@ export default {
 			psw: "",
 			successSnack: false,
 			failSnack: false
-		}
+		};
 	},
 	methods: {
 		sendAuthentification() {
@@ -79,5 +79,5 @@ export default {
 			this.failSnack = true;
 		}
 	}
-}
+};
 </script>
