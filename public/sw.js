@@ -1,35 +1,32 @@
 const staticCacheName = "osa-static-v1";
 const assets = [
-  "/",
-  "/index.html"
+	"/",
+	"/index.html"
 ];
-// install event
+
 self.addEventListener("install", evt => {
-  evt.waitUntil(
-    caches.open(staticCacheName).then((cache) => {
-      console.log("caching shell assets");
-      cache.addAll(assets);
-    })
-  );
+	evt.waitUntil(
+		caches.open(staticCacheName).then((cache) => {
+			cache.addAll(assets);
+		})
+	);
 });
 
-// activate event
 self.addEventListener("activate", evt => {
-  evt.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(keys
-        .filter(key => key !== staticCacheName)
-        .map(key => caches.delete(key))
-      );
-    })
-  );
+	evt.waitUntil(
+		caches.keys().then(keys => {
+			return Promise.all(keys
+				.filter(key => key !== staticCacheName)
+				.map(key => caches.delete(key))
+			);
+		})
+	);
 });
 
-// fetch event
 self.addEventListener("fetch", evt => {
-  evt.respondWith(
-    caches.match(evt.request).then(cacheRes => {
-      return cacheRes || fetch(evt.request);
-    })
-  );
+	evt.respondWith(
+		caches.match(evt.request).then(cacheRes => {
+			return cacheRes || fetch(evt.request);
+		})
+	);
 });
