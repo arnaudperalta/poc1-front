@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-container fluid>
-			<h1>PoC Open Street Arts</h1>
+			<h1>PoC Open Street Art</h1>
 			<v-row>
 				<v-col
 					md="10"
